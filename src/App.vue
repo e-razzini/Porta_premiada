@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <h1>problema monty hall</h1>
-  <!-- <Door numero="1" :hasGift="false" /> -->
-
+ 
 <div class="form">
 
   <div v-if="!iniciado">
+
+   <h3 v-if="portaSelecionada < 1 || portaSelecionada > qtdPortas">{{mensagem}}</h3>  
 
     <label for="qtdPortas">Quantas Portas?</label>
     <input type="text"  id="qtdPortas" size="3" v-model.number="qtdPortas" >
@@ -22,7 +23,7 @@
 </div>
 
 <div class="doors" v-if="portaSelecionada < 1 || portaSelecionada > qtdPortas ? iniciado = false : iniciado">
-  <!-- <h2 v-if="iniciado == false">{{mensagem }}</h2>   -->
+
 <div  v-for="i in qtdPortas" :key="i">  
 <Door :hasGift="i === portaSelecionada" :numero="i"/> 
 </div>
@@ -43,9 +44,9 @@ export default {
 
     return{
     iniciado:false,
-    qtdPortas: 3,
+    qtdPortas:3,
     portaSelecionada:null,
-    mensagem:"numero incopativel"
+    mensagem:"Digite um numero valido." 
     }
       
 },
