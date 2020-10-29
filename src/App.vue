@@ -6,7 +6,7 @@
 
   <div v-if="!iniciado">
 
-   <h3 class="subtitulo" v-if="portaSelecionada <= 0 || portaSelecionada > qtdPortas">{{mensagem}} 0 - {{qtdPortas}}</h3>  
+   <h3 class="subtitulo" v-if="portaSelecionada <= 0 || portaSelecionada > qtdPortas">{{mensagem}} 0 - {{qtdPortas}}.</h3>  
 
     <label for="qtdPortas">Quantas Portas?</label>
     <input type="text"  id="qtdPortas" size="3" v-model.number="qtdPortas" >
@@ -55,14 +55,11 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family:"DsDigi",sans-serif ;
-  src: url("./font/DsDigi.ttf");
-}
+
 * {
   box-sizing: border-box;
-  /* font-family: "Titillium Web", sans-serif; */
-    font-family:"DsDigi",sans-serif ;
+  font-family: "Titillium Web", sans-serif; 
+   
 }
 body {
   color: #fff;
@@ -73,8 +70,8 @@ body {
     rgba(252, 97, 69, 1) 75%
   );
 }
-.form .subtitulo{
-  font-family:"DsDigi",sans-serif ;
+.form .subtitulo{  
+  font-family: 'PT Mono', monospace;
 }
 #app {
   display: flex;
