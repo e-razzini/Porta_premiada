@@ -1,35 +1,49 @@
 <template>
   <div id="app">
     <h1>problema monty hall</h1>
- 
-<div class="form">
 
-  <div v-if="!iniciado">
+    <div class="form">
+      <div v-if="!iniciado">
+        <h3
+          class="subtitulo"
+          v-if="portaSelecionada <= 0 || portaSelecionada > qtdPortas"
+        >
+          {{ mensagem }} 0 - {{ qtdPortas }}.
+        </h3>
 
-   <h3 class="subtitulo" v-if="portaSelecionada <= 0 || portaSelecionada > qtdPortas">{{mensagem}} 0 - {{qtdPortas}}.</h3>  
+        <label for="qtdPortas">Quantas Portas?</label>
+        <input type="text" id="qtdPortas" size="3" v-model.number="qtdPortas" />
+      </div>
 
-    <label for="qtdPortas">Quantas Portas?</label>
-    <input type="text"  id="qtdPortas" size="3" v-model.number="qtdPortas" >
-  </div>
+      <!--Input de porta escolha do player 
 
-<div v-if="!iniciado">
+        <div v-if="!iniciado">
+        <label for="portaSelecionada">Qual a porta premiada?</label>
+        <input class="qtddPortas" type="text" id="portaSelecionada" size="3" v-model.number="portaSelecionada"> 
+       
+      </div>  -->
 
-  <label for="portaSelecionada">Qual a porta premiada?</label>
-  <input type="password"  id="portaSelecionada" size="3" v-model.number="portaSelecionada "> 
-</div>
+      <div v-if="!iniciado"> <!--Escolha automatica random  -->
+        <button v-on:click="getRandom($event)">Sorteio de porta</button>
+      </div>
+      <!-- <h3>{{ portaSelecionada }}</h3> -->
+      <button v-if="!iniciado" @click="iniciado = true">Iniciar game!</button>
+      <button v-if="iniciado" @click="iniciado = false">Reiniciar game!</button>
+    </div>
 
-<button v-if="!iniciado" @click="iniciado = true">Iniciar game!</button>
-<button v-if="iniciado" @click="iniciado = false">Reiniciar game!</button>
-</div>
-
-<div class="doors" v-if="portaSelecionada < 1 || portaSelecionada > qtdPortas ? iniciado = false : iniciado">
-
-<div  v-for="i in qtdPortas" :key="i">  
-<Door :hasGift="i === portaSelecionada" :numero="i"/> 
-</div>
-
-</div>
-
+    <div
+      class="doors"
+      v-if="
+        portaSelecionada < 1 || portaSelecionada > qtdPortas
+          ? (iniciado = false)
+          : iniciado
+      "
+    >
+      <div v-for="i in qtdPortas" :key="i">
+        <Door :hasGift="i === portaSelecionada" :numero="i" />
+      </div>
+    </div>
+    <!-- fim div app -->
   </div>
 </template>
 
@@ -40,26 +54,29 @@ export default {
   name: "app",
   components: { Door },
 
-  data:function(){
+  data: function () {
+    return {
+      iniciado: false,
+      qtdPortas: 10,
+      portaSelecionada: null,
+      mensagem: "Digite um numero entre :",
+    };
+  },
 
-    return{
-    iniciado:false,
-    qtdPortas:3,
-    portaSelecionada:null,
-    mensagem:"Digite um numero entre :" 
-    }
-      
-},
-
-}
+  methods: {
+    getRandom: function (event) {
+      console.log(event);
+      const max = this.qtdPortas;
+      return (this.portaSelecionada = Math.floor(Math.random() * max) + 1);
+    },
+  },
+};
 </script>
 
 <style>
-
 * {
   box-sizing: border-box;
-  font-family: "Titillium Web", sans-serif; 
-   
+  font-family: "Titillium Web", sans-serif;
 }
 body {
   color: #fff;
@@ -70,8 +87,8 @@ body {
     rgba(252, 97, 69, 1) 75%
   );
 }
-.form .subtitulo{  
-  font-family: 'PT Mono', monospace;
+.form .subtitulo {
+  font-family: "PT Mono", monospace;
 }
 #app {
   display: flex;
@@ -91,9 +108,11 @@ body {
   align-items: center;
   margin-bottom: 40px;
 }
-.form, .form input, .form button {
+.form,
+.form input,
+.form button {
   margin-bottom: 10px;
-  font-size:2rem;
+  font-size: 2rem;
   text-align: center;
 }
 .doors {
@@ -112,7 +131,4 @@ body {
     rgba(252, 97, 69, 1) 75%
   );
 }
-
-
-
 </style>
